@@ -1,19 +1,20 @@
-import { dailyLogs } from '../data/db.js'
+import crypto from 'crypto'
+import {
+  findHabit,
+  createHabit,
+  deleteHabit
+} from '../repositories/tracker.repository.js'
+import { updateUser } from '../repositories/user.repository.js'
 import { calculateLevel } from '../utils/level.util.js'
 import { calculateStreak } from '../utils/streak.util.js'
 
 const XP_VALUE = 20
 
 export function toggleHabitService(user, { date, type }) {
-  const existing = dailyLogs.find(
-    log =>
-      log.user_id === user.id &&
-      log.date === date &&
-      log.type === type
-  )
+  const existing = findHabit(user.id, date, type)
 
   if (!existing) {
-    dailyLogs.push({
+    createHabit({
       id: crypto.randomUUID(),
       user_id: user.id,
       date,
@@ -28,12 +29,13 @@ export function toggleHabitService(user, { date, type }) {
     user.last_activity_date = date
 
   } else {
-    const index = dailyLogs.indexOf(existing)
-    dailyLogs.splice(index, 1)
+    deleteHabit(existing)
 
     user.current_xp -= XP_VALUE
     user.level = calculateLevel(user.current_xp)
   }
+
+  updateUser(user)
 
   return user
 }
