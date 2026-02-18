@@ -1,10 +1,13 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { v4 as uuid } from 'uuid'
-import { users } from '../data/db.js'
+import {
+  findUserByEmail,
+  createUser
+} from '../repositories/user.repository.js'
 
 export async function registerUser({ name, email, password }) {
-  const userExists = users.find(u => u.email === email)
+  const userExists = findUserByEmail(email)
   if (userExists) throw new Error('Email already exists')
 
   const password_hash = await bcrypt.hash(password, 10)
@@ -22,12 +25,12 @@ export async function registerUser({ name, email, password }) {
     last_activity_date: null
   }
 
-  users.push(newUser)
+  createUser(newUser)
   return newUser
 }
 
 export async function loginUser({ email, password }) {
-  const user = users.find(u => u.email === email)
+  const user = findUserByEmail(email)
   if (!user) throw new Error('User not found')
 
   const validPassword = await bcrypt.compare(password, user.password_hash)
