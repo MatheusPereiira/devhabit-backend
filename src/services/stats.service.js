@@ -1,4 +1,4 @@
-import { dailyLogs } from '../data/db.js'
+import { findHabitsByUserAndDate } from '../repositories/stats.repository.js'
 
 export function getChartData(user) {
   const days = [...Array(15)].map((_, i) => {
@@ -8,12 +8,9 @@ export function getChartData(user) {
   })
 
   const data = days.map(date => {
-    return dailyLogs
-      .filter(log =>
-        log.user_id === user.id &&
-        log.date === date
-      )
-      .reduce((sum, log) => sum + log.xp_earned, 0)
+    const logs = findHabitsByUserAndDate(user.id, date)
+
+    return logs.reduce((sum, log) => sum + log.xp_earned, 0)
   })
 
   return {
