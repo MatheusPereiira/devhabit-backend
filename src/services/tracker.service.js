@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import { AppError } from '../errors/app-error.js'
 import {
   findHabit,
   createHabit,
@@ -11,6 +12,11 @@ import { calculateStreak } from '../utils/streak.util.js'
 const XP_VALUE = 20
 
 export function toggleHabitService(user, { date, type }) {
+
+  if (!date || !type) {
+    throw new AppError('Date and type are required', 400)
+  }
+
   const existing = findHabit(user.id, date, type)
 
   if (!existing) {
