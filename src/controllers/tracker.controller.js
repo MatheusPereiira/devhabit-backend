@@ -1,6 +1,6 @@
 import { toggleHabitService } from '../services/tracker.service.js'
 
-export const toggleHabit = (req, res) => {
+export const toggleHabit = (req, res, next) => {
   try {
     const updatedUser = toggleHabitService(req.user, req.body)
 
@@ -10,6 +10,6 @@ export const toggleHabit = (req, res) => {
       streak: updatedUser.streak_count
     })
   } catch (err) {
-    return res.status(400).json({ error: err.message })
+    next(err)
   }
 }
