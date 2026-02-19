@@ -1,26 +1,29 @@
 import jwt from 'jsonwebtoken'
-import { users } from '../data/db.js'
+import { AppError } from '../errors/app-error.js'
+import { findUserById } from '../repositories/user.repository.js'
 
 export const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
-    return res.status(401).json({ error: 'Token required' })
+    return next(new AppError('Token required', 401))
   }
 
   const token = authHeader.split(' ')[1]
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    const user = users.find(u => u.id === decoded.id)
+
+    const user = findUserById(decoded.id)
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' })
+      return next(new AppError('User not found', 404))
     }
 
     req.user = user
     next()
+
   } catch (err) {
-    return res.status(401).json({ error: 'Invalid token' })
+    return next(new AppError('Invalid token', 401))
   }
 }
