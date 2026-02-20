@@ -1,17 +1,22 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import helmet from 'helmet'
 
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
 import trackerRoutes from './routes/tracker.routes.js'
 import statsRoutes from './routes/stats.routes.js'
 import { errorMiddleware } from './middlewares/error.middleware.js'
+
 dotenv.config()
 
 const app = express()
 
+app.use(helmet())
+
 app.use(cors())
+
 app.use(express.json())
 
 app.use('/auth', authRoutes)
