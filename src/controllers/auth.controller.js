@@ -1,9 +1,16 @@
 import { registerUser, loginUser } from '../services/auth.service.js'
+import { successResponse } from '../utils/response.js'
 
 export const register = async (req, res, next) => {
   try {
     await registerUser(req.body)
-    return res.status(201).json({ message: 'User created successfully' })
+
+    return successResponse(
+      res,
+      'User created successfully',
+      null,
+      201
+    )
   } catch (err) {
     next(err)
   }
@@ -12,10 +19,11 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { user, token } = await loginUser(req.body)
+    const { password_hash, ...safeUser } = user
 
-    return res.json({
+    return successResponse(res, 'Login successful', {
       token,
-      user
+      user: safeUser
     })
   } catch (err) {
     next(err)
