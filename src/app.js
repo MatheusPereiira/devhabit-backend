@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
 import trackerRoutes from './routes/tracker.routes.js'
 import statsRoutes from './routes/stats.routes.js'
+import { logger } from './utils/logger.js'
 import { rateLimiter } from './middlewares/rate-limit.middleware.js'
 import { errorMiddleware } from './middlewares/error.middleware.js'
 
@@ -15,8 +16,7 @@ const app = express()
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
-
-
+app.use(logger)
 app.use(rateLimiter)
 
 
