@@ -25,7 +25,7 @@ beforeEach(async () => {
       password: '123456'
     })
 
-  token = login.body.token
+  token = login.body.data.token 
 })
 
 describe('Tracker Endpoints', () => {
