@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { AppError } from '../errors/app-error.js'
 import { findUserById } from '../repositories/user.repository.js'
 
-export const authMiddleware = (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
@@ -14,7 +14,7 @@ export const authMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    const user = findUserById(decoded.id)
+    const user = await findUserById(decoded.id)
 
     if (!user) {
       return next(new AppError('User not found', 404))
