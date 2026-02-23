@@ -3,29 +3,34 @@ import { successResponse } from '../utils/response.js'
 
 export const register = async (req, res, next) => {
   try {
-    await registerUser(req.body)
+    const { name, email, password } = req.body
+
+    await registerUser({ name, email, password })
 
     return successResponse(
       res,
-      'User created successfully',
+      'Usuário criado com sucesso',
       null,
       201
     )
   } catch (err) {
-    next(err)
+    return next(err)
   }
 }
 
 export const login = async (req, res, next) => {
   try {
-    const { user, token } = await loginUser(req.body)
+    const { email, password } = req.body
+
+    const { user, token } = await loginUser({ email, password })
+
     const { password_hash, ...safeUser } = user
 
-    return successResponse(res, 'Login successful', {
+    return successResponse(res, 'Login realizado com sucesso', {
       token,
       user: safeUser
     })
   } catch (err) {
-    next(err)
+    return next(err)
   }
 }
