@@ -1,9 +1,9 @@
 import { toggleHabitService } from '../services/tracker.service.js'
 import { successResponse } from '../utils/response.js'
 
-export const toggleHabit = (req, res, next) => {
+export const toggleHabit = async (req, res, next) => {
   try {
-    const updatedUser = toggleHabitService(req.user, req.body)
+    const updatedUser = await toggleHabitService(req.user, req.body)
 
     return successResponse(res, 'Habit updated successfully', {
       current_xp: updatedUser.current_xp,
