@@ -8,7 +8,7 @@ import {
 } from '../repositories/user.repository.js'
 
 export async function registerUser({ name, email, password }) {
-  const userExists = findUserByEmail(email)
+  const userExists = await findUserByEmail(email)
 
   if (userExists) {
     throw new AppError('Email already exists', 400)
@@ -29,13 +29,13 @@ export async function registerUser({ name, email, password }) {
     last_activity_date: null
   }
 
-  createUser(newUser)
+  const createdUser = await createUser(newUser)
 
-  return newUser
+  return createdUser
 }
 
 export async function loginUser({ email, password }) {
-  const user = findUserByEmail(email)
+  const user = await findUserByEmail(email)
 
   if (!user) {
     throw new AppError('User not found', 404)
