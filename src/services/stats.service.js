@@ -1,17 +1,25 @@
 import { findHabitsByUserAndDate } from '../repositories/stats.repository.js'
 
-export function getChartData(user) {
+export async function getChartData(user) {
+
   const days = [...Array(15)].map((_, i) => {
     const d = new Date()
     d.setDate(d.getDate() - (14 - i))
     return d.toISOString().split('T')[0]
   })
 
-  const data = days.map(date => {
-    const logs = findHabitsByUserAndDate(user.id, date)
+  const data = []
 
-    return logs.reduce((sum, log) => sum + log.xp_earned, 0)
-  })
+  for (const date of days) {
+    const logs = await findHabitsByUserAndDate(user.id, date)
+
+    const totalXP = logs.reduce(
+      (sum, log) => sum + Number(log.xp_earned),
+      0
+    )
+
+    data.push(totalXP)
+  }
 
   return {
     labels: days.map(d => d.slice(-2)),
