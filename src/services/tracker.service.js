@@ -11,16 +11,17 @@ import { calculateStreak } from '../utils/streak.util.js'
 
 const XP_VALUE = 20
 
-export function toggleHabitService(user, { date, type }) {
+export async function toggleHabitService(user, { date, type }) {
 
   if (!date || !type) {
     throw new AppError('Date and type are required', 400)
   }
 
-  const existing = findHabit(user.id, date, type)
+  const existing = await findHabit(user.id, date, type)
 
   if (!existing) {
-    createHabit({
+
+    await createHabit({
       id: crypto.randomUUID(),
       user_id: user.id,
       date,
@@ -35,13 +36,14 @@ export function toggleHabitService(user, { date, type }) {
     user.last_activity_date = date
 
   } else {
-    deleteHabit(existing)
+
+    await deleteHabit(existing.id)
 
     user.current_xp -= XP_VALUE
     user.level = calculateLevel(user.current_xp)
   }
 
-  updateUser(user)
+  const updatedUser = await updateUser(user)
 
-  return user
+  return updatedUser
 }
