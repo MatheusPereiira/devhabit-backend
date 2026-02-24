@@ -3,10 +3,16 @@ import { successResponse } from '../utils/response.js'
 
 export const getChart = async (req, res, next) => {
   try {
-    const chart = await getChartData(req.user)
+    const { id } = req.user
 
-    return successResponse(res, 'Chart data retrieved successfully', chart)
+    const chart = await getChartData(id)
+
+    return successResponse(
+      res,
+      'Dados do gráfico obtidos com sucesso',
+      chart
+    )
   } catch (err) {
-    next(err)
+    return next(err)
   }
 }
