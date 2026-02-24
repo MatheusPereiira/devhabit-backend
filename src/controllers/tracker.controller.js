@@ -3,14 +3,21 @@ import { successResponse } from '../utils/response.js'
 
 export const toggleHabit = async (req, res, next) => {
   try {
-    const updatedUser = await toggleHabitService(req.user, req.body)
+    const { id } = req.user
+    const { date, type } = req.body
 
-    return successResponse(res, 'Habit updated successfully', {
-      current_xp: updatedUser.current_xp,
-      level: updatedUser.level,
-      streak: updatedUser.streak_count
-    })
+    const updatedUser = await toggleHabitService(id, { date, type })
+
+    return successResponse(
+      res,
+      'Hábito atualizado com sucesso',
+      {
+        current_xp: updatedUser.current_xp,
+        level: updatedUser.level,
+        streak: updatedUser.streak_count
+      }
+    )
   } catch (err) {
-    next(err)
+    return next(err)
   }
 }
