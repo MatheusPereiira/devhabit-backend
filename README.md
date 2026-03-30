@@ -17,15 +17,15 @@ O **DevHabit** é uma plataforma de ensino de programação gamificada projetada
 
 ## Funcionalidades Atuais
 
-* **🏠 Landing Page Imersiva:** Carrossel infinito de tecnologias e navegação fluida (SPA feel).
-* **📊 Tracker de Hábitos:** Calendário interativo estilo "GitHub Contributions" com persistência de dados local.
-* **📈 Gráfico de Evolução:** Visualização de XP ganho por dia utilizando *Chart.js*.
-* **🎮 Perfil Gamificado:**
+* **Landing Page Imersiva:** Carrossel infinito de tecnologias e navegação fluida (SPA feel).
+* **Tracker de Hábitos:** Calendário interativo estilo "GitHub Contributions" com persistência de dados local.
+* **Gráfico de Evolução:** Visualização de XP ganho por dia utilizando *Chart.js*.
+* **Perfil Gamificado:**
     * Barra de XP e Nível.
     * Contador de Ofensiva (Streak/Foguinho).
     * Sistema de Vidas com Timer de recuperação (Tooltip interativo).
-* **📚 Seletor de Trilhas:** Menu dropdown dinâmico para alternar entre cursos (HTML/CSS, JS, React).
-* **📱 Design Responsivo:** Sidebar retrátil inteligente e layout adaptável.
+* **Seletor de Trilhas:** Menu dropdown dinâmico para alternar entre cursos (HTML/CSS, JS, React).
+* **Design Responsivo:** Sidebar retrátil inteligente e layout adaptável.
 
 ---
 
