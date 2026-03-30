@@ -10,7 +10,8 @@
 
 O **DevHabit** é uma plataforma de ensino de programação gamificada projetada para ajudar estudantes a manterem a constância nos estudos. Diferente de cursos tradicionais, o DevHabit foca na construção do hábito através de mecânicas de jogos, como experiência (XP), ofensiva (streaks), sistema de vidas e rastreamento visual de progresso.
 
-A interface foi construída com foco em **Dark Mode**, utilizando uma paleta de cores moderna e responsiva.
+- **Frontend:** Interface interativa e responsiva.  
+- **Backend:** API responsável por regras de negócio, autenticação e persistência de dados.
 
 --- 
 
